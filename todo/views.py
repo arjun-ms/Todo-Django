@@ -17,11 +17,13 @@ def register(request):
         
         if password1 == password2:
             if User.objects.filter(username=username).exists():
-                messages.info(request,'Username Taken')
-                return redirect('register')
+                # messages.info(request,'Username Taken')
+                # return redirect('register')
+                return render(request, 'register.html',{'error': "Username Taken, Try Another Username"})
             elif User.objects.filter(email=email).exists():
-                messages.info(request,'Email Taken')
-                return redirect('register')
+                # messages.info(request,'Email Taken')
+                # return redirect('register')
+                return render(request, 'register.html', {'error': "Email Already Registered"})
                 
             else:
                 user = User.objects.create_user(username=username,password=password1,email=email,first_name=first_name,last_name=last_name)
@@ -30,9 +32,8 @@ def register(request):
                 return redirect('login')
         else:
             messages.info(request,"password not matching")
-            return redirect('register')
+            return render(request, 'register.html', {'error': "Password Mismatch"})
             
-        return redirect('/')
 
     else:
         return render(request,'register.html')
@@ -43,13 +44,18 @@ def login(request):
         password = request.POST['password']
         
         user = auth.authenticate(username=username,password=password)
+        print(user)
         
         if user is not None:
             auth.login(request,user)
             return redirect('/')
         else:
-            messages.info(request,'invalid credentials')
-            return redirect('login')
+            return render(request,'login.html',{'error': "Invalid Credentials"})
     else:
         return render(request,'login.html')
-    
+
+def logout(request):
+    if request.user.is_authenticated:
+        auth.logout(request)
+
+    return redirect('/')
