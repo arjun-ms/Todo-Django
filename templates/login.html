@@ -1,0 +1,38 @@
+{%extends 'index.html'%} {% block content %}
+<div class="container">
+  <form action="/" method="post">
+    {% csrf_token%}
+
+    <fieldset>
+      <legend>Login Form</legend>
+      <div class="mb-3">
+        <label for="TextInput" class="form-label">Username</label>
+        <input
+          type="text"
+          name="username"
+          required
+          id="TextInput"
+          class="form-control"
+          placeholder="Enter Username"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="TextInput" class="form-label">Password</label>
+        <input
+          type="password"
+          name="password"
+          required
+          id="TextInput"
+          class="form-control"
+          placeholder="Enter Password"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </fieldset>
+  </form>
+  {% if error %}
+  <br />
+  <div class="alert alert-danger" role="alert">{{error}}</div>
+  {% endif %}
+</div>
+{% endblock %}

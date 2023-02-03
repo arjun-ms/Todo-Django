@@ -1,0 +1,89 @@
+{% extends 'index.html' %} {% block content %}
+<div class="container">
+  <form action="register" method="post">
+    {% csrf_token%}
+
+    <fieldset>
+      <legend>Register Form</legend>
+      <div class="mb-3">
+        <label for="TextInput" class="form-label">First Name</label>
+        <input
+          type="text"
+          required
+          name="first_name"
+          id="TextInput"
+          class="form-control"
+          placeholder="Your First Name"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="TextInput" class="form-label">Last Name</label>
+        <input
+          type="text"
+          required
+          name="last_name"
+          id="TextInput"
+          class="form-control"
+          placeholder="Your Last Name"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="TextInput" class="form-label">Email Address</label>
+        <input
+          type="email"
+          required
+          name="email"
+          id="TextInput"
+          class="form-control"
+          placeholder="Enter Email Address"
+        />
+      </div>
+      
+      <div class="mb-3">
+        <label for="TextInput" class="form-label">Username</label>
+        <input
+          type="text"
+          required
+          name="username"
+          id="TextInput"
+          class="form-control"
+          placeholder="Enter Username"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="TextInput" class="form-label">Password</label>
+        <input
+          type="password"
+          required
+          name="password1"
+          id="TextInput"
+          class="form-control"
+          placeholder="Enter Password"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="TextInput" class="form-label">Re-type Password</label>
+        <input
+          type="password"
+          required
+          name="password2"
+          id="TextInput"
+          class="form-control"
+          placeholder="Confirm Password"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+
+    </fieldset>
+  </form>
+  {% if error %}
+    <br />
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+  {% endif %}
+</div>
+{% endblock %}
