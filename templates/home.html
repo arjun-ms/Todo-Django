@@ -2,11 +2,11 @@
 <div class="container">
 
   {% if not render_data.pending %}
-  <h4>In Progress Todos</h4>
+  <h4 style="color: blue">In Progress Todos</h4>
   {% endif  %}
 
   {% if not render_data.todos is defined and not render_data.todos|length > 0 %}
-  <h4>No Todos, Try Creating One</h4>
+  <h4 style="color: blue">No Todos, Try Creating One</h4>
   {% endif %}
 
 
@@ -15,7 +15,7 @@
     <div class="card m-3">
       <h5 class="card-header">In Progress Todos</h5>
       <div class="card-body">
-        <h5 class="card-title">{{todo.id}}</h5>
+        <!-- <h5 class="card-title">{{todo.id}}</h5> -->
         <h5 class="card-title">{{todo.title}}</h5>
         <p class="card-text">{{todo.description}}</p>
         <p class="card-text">Complete By: {{todo.completiondate}}</p>
@@ -39,13 +39,13 @@
 
   {% if not expired %}
   {% if render_data.incomplete_todos and render_data.incomplete_todos|length > 0 %}
-    <h4>Expired Todos</h4>
+    <h4 style="color: blue">Expired Todos</h4>
   {% endif  %}
   {% endif  %}
 
   {% for todo in render_data.incomplete_todos %}
   <div class="container">
-    <div class="card m-3">
+    <div class="card  m-3">
       <h5 class="card-header">Expired Todos</h5>
       <div class="card-body">
         <h5 class="card-title">{{todo.title}}</h5>
@@ -62,7 +62,7 @@
   {% endfor %}
 
   {% if not render_data.completed %}
-  <h4>Completed Todos</h4>
+  <h4 style="color: blue">Completed Todos</h4>
   {% endif %}
 
   {% for todo in render_data.completed_todos %} 

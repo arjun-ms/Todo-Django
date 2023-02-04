@@ -3,10 +3,10 @@ from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from .models import Todo
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-def index(request):
-    return render(request, 'index.html')
+
 
 def register(request):
     if request.method == 'POST':
@@ -31,7 +31,7 @@ def register(request):
                 user = User.objects.create_user(username=username,password=password1,email=email,first_name=first_name,last_name=last_name)
                 user.save();
                 print("user created")
-                return redirect('login')
+                return redirect('/')
         else:
             messages.info(request,"password not matching")
             return render(request, 'register.html', {'error': "Password Mismatch"})
@@ -56,12 +56,14 @@ def login(request):
     else:
         return render(request,'login.html')
 
+@login_required(login_url='/')
 def logout(request):
     if request.user.is_authenticated:
         auth.logout(request)
 
-    return redirect('/')
+    return redirect('/home')
 
+@login_required(login_url='/')
 def create(request):
     if request.method == 'GET' and request.user.is_authenticated:
         return render(request,'create.html')
@@ -83,7 +85,8 @@ def create(request):
     
     else:
         return redirect('/')
-    
+
+@login_required(login_url='/')  
 def home(request):
     if request.user.is_authenticated:
 
@@ -127,7 +130,8 @@ def home(request):
         return render(request, 'home.html', {'render_data': render_data})
     else:
         return redirect('/')
-    
+
+@login_required(login_url='/') 
 def completed(request):
     if request.method == 'POST':
         obj_id = request.POST.get("object_id")
