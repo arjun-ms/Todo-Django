@@ -92,7 +92,6 @@ def home(request):
         completed = True
 
         todos = Todo.objects.filter(user=request.user)
-
         today = datetime.today()
 
         incomplete_todos = []
@@ -137,3 +136,48 @@ def completed(request):
         obj.save()
 
     return redirect('/home')
+
+
+# def modify(request):
+#     # Updating the task
+#     if request.method == 'POST' and request.user.is_authenticated:
+#         print("POST WORKING")
+#         task_id = request.POST.get("modify_id")
+#         print("Task ID: ", task_id)
+#         return render(request,'modify.html')
+        
+#     elif request.method == 'PUT' and request.user.is_authenticated:
+        
+#         print("PUT WORKING")
+#         todo = Todo.objects.get(id=task_id)
+#         if todo.completed == False:
+#             print("IF WORKING")
+#             title = request.PUT.get('title')
+#             description = request.PUT.get('description')
+#             completiondate = request.PUT.get('completiondate')
+            
+#             print("Title: ", title)
+#             print("Description: ", description)
+#             print("Completion Date: ", completiondate)
+            
+#             if not title or not description or not completiondate:
+#                 print(request.POST)
+                
+#             todo.title = title
+#             todo.description = description
+#             todo.completiondate = completiondate
+#             todo.save()
+#             return redirect('/home')
+#         else:
+#             print("Task Already Completed")
+        
+#         # rendering the page
+#         todo = Todo.objects.get(id=task_id)
+#         context = {
+#             'title': todo.title,
+#             'description': todo.description,
+#             'completiondate': todo.completiondate,
+#             'id': todo.id
+#         }
+#         print(context)
+#         return render(request,'modify.html',context)

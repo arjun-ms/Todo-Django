@@ -1,0 +1,54 @@
+<!-- {% extends 'index.html' %} {% block content %}
+<div class="container">
+  <form action="modify" method="put">
+
+    {% csrf_token%}
+
+    <fieldset>
+      <legend>Modify Task {{title}}</legend>
+      <div class="mb-3">
+        <label for="TextInput" class="form-label">Title</label>
+        <input
+          type="text"
+          required
+          name="title"
+          id="TextInput"
+          class="form-control"
+          placeholder="Todo Name"
+          value="{{title}}"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="TextInput" class="form-label">Description</label>
+        <input
+          type="text"
+          required
+          name="description"
+          id="TextInput"
+          class="form-control"
+          placeholder="Description"
+          value="{{description}}"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="TextInput" class="form-label">Completion Date</label>
+        <input
+          type="date"
+          required
+          name="date"
+          id="TextInput"
+          class="form-control"
+          placeholder="Todo Name"
+          value="{{completiondate}}"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Update</button>
+    </fieldset>
+  </form>
+  {% if error %}
+  <br />
+  <div class="alert alert-danger" role="alert">{{error}}</div>
+  {% endif %}
+</div>
+{% endblock %} -->

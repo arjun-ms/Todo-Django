@@ -15,15 +15,23 @@
     <div class="card m-3">
       <h5 class="card-header">In Progress Todos</h5>
       <div class="card-body">
+        <h5 class="card-title">{{todo.id}}</h5>
         <h5 class="card-title">{{todo.title}}</h5>
         <p class="card-text">{{todo.description}}</p>
         <p class="card-text">Complete By: {{todo.completiondate}}</p>
       </button>
-      <form method="POST" action="completed">
-        {% csrf_token %}
-        <input type="hidden" name="object_id" value="{{ todo.id }}">
-        <button class="btn btn-primary" type="submit">Mark as Completed</button>
-      </form>
+        <div class="d-flex justify-content-between">
+            <form method="POST" action="completed">
+                {% csrf_token %}
+                <input type="hidden" name="object_id" value="{{ todo.id }}">
+                <button class="btn btn-primary" type="submit">Mark as Completed</button>
+            </form>
+            <!-- <form method="POST" action="modify">
+                {% csrf_token %}
+                <input type="hidden" name="modify_id" value="{{ todo.id }}">
+                <button class="btn btn-primary" type="submit">Modify</button>
+            </form> -->
+        </div>
       </div>
     </div>
   </div> 
