@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
+from .models import Todo
+from datetime import datetime
 
 # Create your views here.
 def index(request):
@@ -59,3 +61,26 @@ def logout(request):
         auth.logout(request)
 
     return redirect('/')
+
+def create(request):
+    if request.method == 'GET' and request.user.is_authenticated:
+        return render(request,'create.html')
+    
+    elif request.method == 'POST' and request.user.is_authenticated:
+        title = request.POST['title']
+        description = request.POST['description']
+        completiondate = request.POST['date']
+        
+        today = datetime.today()
+        if datetime.strptime(completiondate, '%Y-%m-%d' ).date() < today.date(): 
+            return render(request, 'create.html', {'error': 'Date Cannot be Validated!'})
+        
+        todo = Todo(title=title,description=description,completiondate=completiondate,user=request.user)
+        todo.save()
+        print("Todo Created")
+        
+        return redirect('/')
+    
+    else:
+        return redirect('/')
+    
