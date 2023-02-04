@@ -50,7 +50,7 @@ def login(request):
         
         if user is not None:
             auth.login(request,user)
-            return redirect('/')
+            return redirect('/home')
         else:
             return render(request,'login.html',{'error': "Invalid Credentials"})
     else:
@@ -79,8 +79,61 @@ def create(request):
         todo.save()
         print("Todo Created")
         
-        return redirect('/')
+        return redirect('/home')
     
     else:
         return redirect('/')
     
+def home(request):
+    if request.user.is_authenticated:
+
+        pending = True
+        expired = True
+        completed = True
+
+        todos = Todo.objects.filter(user=request.user)
+
+        today = datetime.today()
+
+        incomplete_todos = []
+        inprogress_todos = []
+        completed_todos = []
+
+        for todo in todos:
+            if todo.completiondate < today.date() and not todo.completed:
+                incomplete_todos.append(todo)
+                if expired:
+                    expired = False
+            elif not todo.completed:
+                inprogress_todos.append(todo)
+                if pending:
+                    pending = False
+               
+            elif todo.completed:
+                completed_todos.append(todo)
+                if completed:
+                    completed = False
+                
+
+        render_data = {
+            'todos': todos,
+            'inprogress_todos': inprogress_todos,
+            'incomplete_todos':  incomplete_todos,
+            'completed_todos': completed_todos,
+            'pending': pending,
+            'expired': expired,
+            'completed': completed
+        }
+
+        return render(request, 'home.html', {'render_data': render_data})
+    else:
+        return redirect('/')
+    
+def completed(request):
+    if request.method == 'POST':
+        obj_id = request.POST.get("object_id")
+        obj = Todo.objects.get(id=obj_id)
+        obj.completed = True
+        obj.save()
+
+    return redirect('/home')

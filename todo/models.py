@@ -12,7 +12,7 @@ class Todo(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=225)
     created = models.DateTimeField(auto_now_add=True)
-    completiondate = models.DateTimeField(validators=[validate_date])
+    completiondate = models.DateField(validators=[validate_date])
     completed = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     

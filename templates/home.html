@@ -1,0 +1,78 @@
+{% extends 'index.html' %} {% block content %}
+<div class="container">
+
+  {% if not render_data.pending %}
+  <h4>In Progress Todos</h4>
+  {% endif  %}
+
+  {% if not render_data.todos is defined and not render_data.todos|length > 0 %}
+  <h4>No Todos, Try Creating One</h4>
+  {% endif %}
+
+
+  {% for todo in render_data.inprogress_todos %} 
+  <div class="container">
+    <div class="card m-3">
+      <h5 class="card-header">In Progress Todos</h5>
+      <div class="card-body">
+        <h5 class="card-title">{{todo.title}}</h5>
+        <p class="card-text">{{todo.description}}</p>
+        <p class="card-text">Complete By: {{todo.completiondate}}</p>
+      </button>
+      <form method="POST" action="completed">
+        {% csrf_token %}
+        <input type="hidden" name="object_id" value="{{ todo.id }}">
+        <button class="btn btn-primary" type="submit">Mark as Completed</button>
+      </form>
+      </div>
+    </div>
+  </div> 
+  {% endfor %}
+
+  {% if not expired %}
+  {% if render_data.incomplete_todos and render_data.incomplete_todos|length > 0 %}
+    <h4>Expired Todos</h4>
+  {% endif  %}
+  {% endif  %}
+
+  {% for todo in render_data.incomplete_todos %}
+  <div class="container">
+    <div class="card m-3">
+      <h5 class="card-header">Expired Todos</h5>
+      <div class="card-body">
+        <h5 class="card-title">{{todo.title}}</h5>
+        <p class="card-text">{{todo.description}}</p>
+        <p class="card-text">Date: {{todo.completiondate}}</p>
+        <form method="POST" action="update_value">
+          {% csrf_token %}
+          <input type="hidden" name="object_id" value="{{ todo.id }}">
+          <button class="btn btn-primary" type="submit">Mark as Completed</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  {% if not render_data.completed %}
+  <h4>Completed Todos</h4>
+  {% endif %}
+
+  {% for todo in render_data.completed_todos %} 
+  <div class="container">
+    <div class="card m-3">
+      <h5 class="card-header">Completed Todos</h5>
+      <div class="card-body">
+        <h5 class="card-title">{{todo.title}}</h5>
+        <p class="card-text">{{todo.description}}</p>
+        <p class="card-text">Date: {{todo.completiondate}}</p>
+      </div>
+    </div>
+  </div>
+ {% endfor %}
+</div>
+</div>
+
+
+ 
+
+{% endblock %}
